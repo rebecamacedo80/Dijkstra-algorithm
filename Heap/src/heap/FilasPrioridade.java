@@ -29,5 +29,27 @@ public class FilasPrioridade extends Heap{
         System.out.println("\nMaximo: " + max);
         return max;
     }
-        
+    
+    public void Heap_increaseKey(Heap a, int i, int chave){
+        if(chave < a.vetor[i]){
+            System.out.println("Chave menor.");
+        }
+        a.vetor[i] = chave;
+        while((i > 0) && ((a.vetor[Pai(i)]) < a.vetor[i])){
+            int troca;
+            
+            troca = a.vetor[i];
+            a.vetor[i] = a.vetor[Pai(i)];
+            a.vetor[Pai(i)] = troca;
+            
+            i = a.Pai(i);
+        }
+    }
+    
+    public void Max_heapInsert(Heap a, int chave){
+        ++a.tam_heap;
+        a.vetor[tam_heap] = -1;
+        Heap_increaseKey(a, tam_heap, chave);
+    }
+            
 }
