@@ -2,7 +2,7 @@ package heap;
 
 /**
  *
- * @author rebeca
+ * @author rebeca, lucas
  */
 import java.util.Arrays;
 
@@ -36,6 +36,12 @@ public class Heap {
         return (2*i)+1;
     }
     
+    public void swap(Heap heap, int a, int b){
+        int aux = heap.vetor[a];
+        heap.vetor[a] = heap.vetor[b];
+        heap.vetor[b] = aux;
+    }
+    
     public void Max_heapify(Heap a, int i){        
         int l = a.Esq(i);
         int r = a.Dir(i);
@@ -51,12 +57,14 @@ public class Heap {
         }
         
         if(maior != i){
-            int troca;
-                                    
+            /*
+            int troca;                        
             troca = a.vetor[i];
             a.vetor[i] = a.vetor[maior];
             a.vetor[maior] = troca;
+            */
             
+            swap(a, i, maior);
             Max_heapify(a, maior);
         }
         
@@ -75,12 +83,13 @@ public class Heap {
             menor = r;
         }
         if(menor != i){
+            /*
             int troca;
-            
             troca = a.vetor[i];
             a.vetor[i] = a.vetor[menor];
             a.vetor[menor] = troca;
-            
+            */
+            swap(a, i, menor);
             Min_heapify(a, menor);
         }
     }
@@ -107,12 +116,13 @@ public class Heap {
         a.Build_MaxHeap(a);
         
         for(int i = (a.comp - 1); i >= 0; i--){
+            /*
             int troca;
-            
             troca = a.vetor[i];
             a.vetor[i] = a.vetor[0];
             a.vetor[0] = troca;
-            
+            */
+            swap(a, i, 0);
             a.tam_heap -= 1;
             a.Max_heapify(a, 0);
         }

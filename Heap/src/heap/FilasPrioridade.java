@@ -2,8 +2,8 @@
 package heap;
 
 /**
- *
- * @author rebeca
+ * 
+ * @author rebeca, lucas
  */
 public class FilasPrioridade extends Heap{
     

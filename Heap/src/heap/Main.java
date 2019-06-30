@@ -3,7 +3,7 @@ package heap;
 
 /**
  *
- * @author rebeca
+ * @author rebeca, lucas
  */
 public class Main {
     public static void main(String[] args) {
