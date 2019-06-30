@@ -6,7 +6,7 @@ package heap;
  * @author rebeca, lucas
  */
 public class Main {
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         Heap h = new Heap(6);
         FilasPrioridade fp = new FilasPrioridade(6);
         
@@ -34,6 +34,6 @@ public class Main {
                         
         }
        
-    }
+    }*/
     
 }
