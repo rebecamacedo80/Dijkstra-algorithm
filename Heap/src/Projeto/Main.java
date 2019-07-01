@@ -35,7 +35,7 @@ public class Main {
             /*
             System.out.print("Heap Minimo: ");
             System.out.println(fila.heap_minimum(fila));
-             */
+            */
           
         // TESTE 2 - Remover o mínimo valor(chave) e retornar ele.   [HEAP-EXTRACT-MIN]
             /*
@@ -58,5 +58,6 @@ public class Main {
             System.out.print("Fila depois de adicionar: ");
             fila.show(fila);
             */
+                        
     }
 }

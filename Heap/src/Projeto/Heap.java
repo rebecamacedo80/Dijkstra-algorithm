@@ -75,9 +75,9 @@ public class Heap {
     }
     
     public void Build_MinHeap(Heap a){
-        a.tam_heap = a.comp;
+        a.comp = a.tam_heap;
         
-        for(int i = a.comp; i >= 0; i--){
+        for(int i = (a.comp/2); i >= 0; i--){
             Min_heapify(a, i);
         }
         //System.out.println("Build-Min-Heap: "+ Arrays.toString(a.vetor));
