@@ -6,35 +6,36 @@ package Projeto;
  */
 public class FilaMinima extends Heap{
     
-    public FilaMinima(int size) {
-        super(size);    
+    public FilaMinima(Vertice[] v) {
+        super(v);    
     }
     
     public int heap_minimum(FilaMinima fila){
-        return fila.vetor[0];
+        return fila.vertice[0].valor;
     }
     
-    public int heap_extractMin(FilaMinima fila){
+    public Vertice heap_extractMin(FilaMinima fila){
         if(fila.tam_heap < 0){
             System.out.println("error");
         }
         // avaliar se esse bloco de codigo abaixo deve estar dentro de um else
-        int minimo = fila.vetor[0];
-        fila.vetor[0] = fila.vetor[fila.tam_heap-1];
+        Vertice menor_vertice = fila.vertice[0];
+        fila.vertice[0] = fila.vertice[fila.tam_heap-1];
+        fila.vertice[0].id = 0;
         fila.tam_heap -= 1;
         fila.Min_heapify(fila, 0);
-        return minimo;
+        return menor_vertice;
     }
     
     public void heap_increaseKey(FilaMinima fila, int i, int chave){
         // a chave é basicamente o conteudo do elemento do array
-        if(chave > fila.vetor[i]){
+        if(chave > fila.vertice[i].valor){
             System.out.println("Erro: a chave inserida é maior que a chave atual");
         }else{
             // avaliar se este bloco dentro do else realmente necessita estar nesta condição
-            fila.vetor[i] = chave;
+            fila.vertice[i].valor = chave;
             
-            while((i > 0) && (fila.vetor[Pai(i)] > fila.vetor[i])){
+            while((i > 0) && (fila.vertice[Pai(i)].valor > fila.vertice[i].valor)){
                 swap(fila, i, Pai(i));
                 i = Pai(i);
             }
@@ -45,7 +46,7 @@ public class FilaMinima extends Heap{
         fila.tam_heap += 1;
         //fila.comp += 1;
         //na minha opinião deveria incrementar o comprimento do heap tbm... mas no livro não informa
-        fila.vetor[fila.tam_heap - 1] = Integer.MAX_VALUE;
+        fila.vertice[fila.tam_heap - 1].valor = Integer.MAX_VALUE;
         fila.heap_increaseKey(fila, (fila.tam_heap - 1), chave);
         
     }
