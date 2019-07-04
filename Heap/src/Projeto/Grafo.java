@@ -5,9 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-
-
+import java.util.Stack;
 
 /**
  *
@@ -16,12 +16,13 @@ import java.util.List;
 public class Grafo {
     Vertice vertices[];
     int matrizAdj[][];
+    int distancia = 0;
     List<Vertice> ListaAdj;
+    Stack<Integer> pilha = new Stack<>();
     
     public Grafo(String file) throws IOException{
         matrizAdj = Le_arq(file);
-    }
-    
+    }    
     
     public List<Vertice> crialistAdj(int[][] matrizAdj){
         
@@ -55,12 +56,11 @@ public class Grafo {
         
         return minhaLista;
     }
-    
-    
+        
    public int[][] Le_arq(String file) throws FileNotFoundException, IOException {
         
         String  filename = file;
-        String arquivo = "/home/lucas/Documentos/"+filename;
+        String arquivo = "/home/rebeca/ORD/"+filename;
         
         FileReader arq =  new FileReader(arquivo);       
         BufferedReader ler_arq = new BufferedReader(arq);
@@ -84,16 +84,13 @@ public class Grafo {
         do{
             linha = ler_arq.readLine();
             
-            //System.out.println(linha);
             if(linha == null) break;
             String lin;
             lin = linha.replace("\t", " ");
-            //ar = lin.split("\t");
-            ar = lin.split(" ");
-            //System.out.println(Arrays.toString(ar));
             
-            for(int i = 0; i< ar.length; i++){
-                //System.out.println(ar.length);
+            ar = lin.split(" ");
+            
+            for(int i = 0; i< ar.length; i++){              
                 vec[aux] = Integer.parseInt(ar[i]);
                 aux++;
             }
@@ -116,14 +113,11 @@ public class Grafo {
         //for só pra printar matriz        
         for(int i = 0; i < matrizAdj.length; i++){
             System.out.println(" ");
-            for(int j = 0; j < matrizAdj.length; j++){
-                
-                System.out.print(matrizAdj[i][j]+"    ");
-            }
-            
+            for(int j = 0; j < matrizAdj.length; j++){                
+                System.out.print(matrizAdj[i][j]+"\t");
+            }            
         }
-        return matrizAdj;
-        
+        return matrizAdj;        
     }
    
     public void preencheVertice(){
@@ -134,38 +128,38 @@ public class Grafo {
             //System.out.println("Percorre Lista:" + ListaAdj.get(i));
         }
     }
+    
+    public void relax(Vertice u, Vertice v, int adj, FilaMinima f){  
+        if(v.valor > u.valor + matrizAdj[u.id][v.id]){
+            v.valor = u.valor + matrizAdj[u.id][v.id];
+            f.heap_decreaseKey(v.id_orig, v.valor);            
+            v.pred = u.id_orig; //não sei sobre isso
+        }
+        
+        
+    }   
    
-   
-       public void djkstra(Grafo g, Vertice destino, Vertice origem){
+    public void djkstra(Grafo g, Vertice origem){
         origem.valor = 0;
         FilaMinima fila = new FilaMinima(g.vertices);
-        fila.fill(fila, g.vertices);
-        
-        int s = 0;
-           
+        fila.fill(fila, g.vertices); 
         fila.show(fila);
-        while(fila.tam_heap != 0){
-            fila.Build_MinHeap(fila);
+        
+        fila.Build_MinHeap(fila);
+        
+        while(fila.tam_heap != 0){            
             Vertice u = fila.heap_extractMin(fila);
+            System.out.println(u.valor);
             
+            ;
             
             for(int i = 0; i < u.adjacente.size(); i++){
-                relax(u, u.adjacente.get(i), g.matrizAdj[u.id][u.adjacente.get(i).id]);
-                 
+                //esse print é pra mostrar qual adjacente está pegando, mas
+                //isso está estranho (pra mim, nesse momento)
+                System.out.println("esse é o adj: " + u.adjacente.get(i).valor);
+                relax(u, u.adjacente.get(i), g.matrizAdj[u.id_orig][u.adjacente.get(i).id_orig], fila);                
             }
-            s = u.valor;
             
-        }
-        System.out.println("Dijkstra: " + s);
-    }
-       
-       
-    
-    public void relax(Vertice u, Vertice v, int adj){
-        if(v.valor > u.valor + matrizAdj[v.id][u.id]){
-            v.valor = u.valor + matrizAdj[v.id][u.id];
-            v.pred = u;
-        }
-    }
-    
+        }                
+    }    
 }

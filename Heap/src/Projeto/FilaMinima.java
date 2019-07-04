@@ -27,16 +27,16 @@ public class FilaMinima extends Heap{
         return menor_vertice;
     }
     
-    public void heap_increaseKey(FilaMinima fila, int i, int chave){
+    public void heap_decreaseKey(int i, int chave){
         // a chave é basicamente o conteudo do elemento do array
-        if(chave > fila.vertice[i].valor){
-            System.out.println("Erro: a chave inserida é maior que a chave atual");
+        if(chave > this.vertice[i].valor){
+            //System.out.println("Nada feito. Chave inserida é maior que a chave atual");
         }else{
             // avaliar se este bloco dentro do else realmente necessita estar nesta condição
-            fila.vertice[i].valor = chave;
+            this.vertice[i].valor = chave;
             
-            while((i > 0) && (fila.vertice[Pai(i)].valor > fila.vertice[i].valor)){
-                swap(fila, i, Pai(i));
+            while((i > 0) && (this.vertice[Pai(i)].valor > this.vertice[i].valor)){
+                swap(this, i, Pai(i));
                 i = Pai(i);
             }
         }
@@ -47,7 +47,7 @@ public class FilaMinima extends Heap{
         //fila.comp += 1;
         //na minha opinião deveria incrementar o comprimento do heap tbm... mas no livro não informa
         fila.vertice[fila.tam_heap - 1].valor = Integer.MAX_VALUE;
-        fila.heap_increaseKey(fila, (fila.tam_heap - 1), chave);
+        fila.heap_decreaseKey((fila.tam_heap - 1), chave);
         
     }
     

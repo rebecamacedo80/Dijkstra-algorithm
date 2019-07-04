@@ -31,7 +31,7 @@ public class Heap {
     
     public void fill(Heap a, Vertice[] v){
         for(int i = 0; i < a.comp; i++){
-            a.vertice[i] = v[i];  
+            a.vertice[i] = v[i];
         }
     }
     

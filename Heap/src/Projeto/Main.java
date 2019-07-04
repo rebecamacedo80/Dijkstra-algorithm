@@ -17,10 +17,7 @@ public class Main {
         g.ListaAdj = g.crialistAdj(g.matrizAdj);
         //System.out.println("Lista ADJ:" + g.ListaAdj);
         g.preencheVertice();
-        System.out.println("Lista de Vertices: ");
-
-
-        
-       g.djkstra(g, g.vertices[0], g.vertices[g.ListaAdj.size()-1] );
+        //System.out.println("Lista de Vertices: ");        
+        g.djkstra(g, g.vertices[0]);
     }
 }
