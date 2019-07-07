@@ -152,11 +152,12 @@ public class Grafo {
         f.fill(vertices);
         
         System.out.println("\n\nCaminhos mínimos: ");
-        for(int i = 0; i < vertices.length; i++){
+        for(int i = 0; i < vertices.length; i++){            
             f.Build_MinHeap();
             Vertice v = f.heap_extractMin();
             
-            System.out.println("ID: " + v.id_orig + "\tvalor: " + v.valor + "\tPredecessor: " + v.pred);          
+            System.out.println("ID: " + v.id_orig + "\tvalor: " + v.valor + "\tPredecessor: " + v.pred);
+            if(v.id_orig == (vertices.length -1)) break;
             
         }   
     }    
