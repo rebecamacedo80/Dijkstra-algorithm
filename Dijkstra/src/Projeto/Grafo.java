@@ -123,11 +123,11 @@ public class Grafo {
         
         if(proximo.valor > atual.valor + peso_adj){
             proximo.valor = atual.valor + peso_adj;
-            f.heap_decreaseKey(proximo.id, proximo.valor);            
-            
+            f.heap_decreaseKey(proximo.id, proximo.valor);
+            proximo.pred = atual.id_orig;
+            pilha.push(proximo.pred);
         }
-        proximo.pred = atual.id_orig;
-        pilha.push(proximo.pred);
+        
     }
     
     public void djkstra(Vertice origem){
@@ -145,9 +145,19 @@ public class Grafo {
                 for(int i = 0; i < u.adjacente.size(); i++){ 
                    relax(u, u.adjacente.get(i), this.matrizAdj[u.id_orig][u.adjacente.get(i).id_orig], fila);                    
                 }
-                
-        }   
-            System.out.println("\n\n\nCAMINHO MÍNIMO ATÉ O VERTICE[n-1]: " + vertices[vertices.length-1].valor + "\tPredecessor: " + vertices[vertices.length-1].pred);
+        }
+        
+        //printar caminhos
+        FilaMinima f = new FilaMinima(vertices);
+        f.fill(vertices);
+        
+        System.out.println("\n\nCaminhos mínimos: ");
+        for(int i = 0; i < vertices.length; i++){
+            f.Build_MinHeap();
+            Vertice v = f.heap_extractMin();
             
+            System.out.println("ID: " + v.id_orig + "\tvalor: " + v.valor + "\tPredecessor: " + v.pred);          
+            
+        }   
     }    
 }
