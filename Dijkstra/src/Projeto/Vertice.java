@@ -21,7 +21,7 @@ public class Vertice {
         this.valor = Integer.MAX_VALUE;
         this.pred = -1;
         id_inicial++;
-        //this.adjacente = new ArrayList<String>;
+        
     }
 
 

@@ -1,5 +1,6 @@
 package Projeto;
 
+import com.sun.xml.internal.bind.v2.runtime.output.SAXOutput;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -15,45 +16,34 @@ import java.util.Stack;
  */
 public class Grafo {
     Vertice vertices[];
-    int matrizAdj[][];
-    int distancia = 0;
-    List<Vertice> ListaAdj;
+    int matrizAdj[][];    
+    ArrayList<Vertice> ListaAdj;
     Stack<Integer> pilha = new Stack<>();
     
     public Grafo(String file) throws IOException{
         matrizAdj = Le_arq(file);
     }    
     
-    public List<Vertice> crialistAdj(int[][] matrizAdj){
+    public ArrayList<Vertice> crialistAdj(int[][] matrizAdj){
         
-        List<Vertice> minhaLista = new ArrayList<>();
+        ArrayList<Vertice> minhaLista = new ArrayList<>();
         for(int i = 0; i < matrizAdj.length; i++){
             minhaLista.add(new Vertice());
+            
         }
-        //System.out.println(minhaLista.toString());
-        //System.out.println(minhaLista.get(0).adjacente);
-        
-        for(int i = 0; i < minhaLista.size(); i++){
-            System.out.println("");
+        for(int i = 0; i < minhaLista.size(); i++){            
             for(int j = i; j < matrizAdj.length; j++){
                 
                 if(i == j){
                     continue;
                     
                 }
-                //System.out.println("No i= " + i + ", j =" + j);
-                //System.out.println(i + "," + j);
+                
                 minhaLista.get(i).adjacente.add(minhaLista.get(j));
                 minhaLista.get(j).adjacente.add(minhaLista.get(i));
+                
             }
         }
-                //System.out.println("Minha lista Inteira: " + minhaLista.toString());
-                //System.out.println("Meu elemento 0 da lista  adjacentes: " + minhaLista.get(0).adjacente);
-                //System.out.println("Meu elemento 1 da lista  adjacentes: " + minhaLista.get(1).adjacente);
-                //System.out.println("Meu elemento 2 da lista  adjacentes: " + minhaLista.get(2).adjacente);
-                //System.out.println("Meu elemento 1 da lista  adjacentes: " + minhaLista.get(1).adjacente.get(0));
-                //System.out.println("Meu elemento 2 da lista  adjacentes: " + minhaLista.get(2).adjacente.get(0));
-        
         return minhaLista;
     }
         
@@ -122,44 +112,42 @@ public class Grafo {
    
     public void preencheVertice(){
         vertices = new Vertice[ListaAdj.size()];
-        for(int i = 0; i < ListaAdj.size(); i++){
-
+        
+        for(int i = 0; i < ListaAdj.size(); i++){            
             vertices[i] = ListaAdj.get(i);
-            //System.out.println("Percorre Lista:" + ListaAdj.get(i));
+            
         }
     }
     
-    public void relax(Vertice u, Vertice v, int adj, FilaMinima f){  
-        if(v.valor > u.valor + matrizAdj[u.id][v.id]){
-            v.valor = u.valor + matrizAdj[u.id][v.id];
-            f.heap_decreaseKey(v.id_orig, v.valor);            
-            v.pred = u.id_orig; //não sei sobre isso
+    public void relax(Vertice atual, Vertice proximo, int peso_adj, FilaMinima f){ 
+        
+        if(proximo.valor > atual.valor + peso_adj){
+            proximo.valor = atual.valor + peso_adj;
+            f.heap_decreaseKey(proximo.id, proximo.valor);            
+            
         }
-        
-        
-    }   
-   
-    public void djkstra(Grafo g, Vertice origem){
+        proximo.pred = atual.id_orig;
+        pilha.push(proximo.pred);
+    }
+    
+    public void djkstra(Vertice origem){
         origem.valor = 0;
-        FilaMinima fila = new FilaMinima(g.vertices);
-        fila.fill(fila, g.vertices); 
-        fila.show(fila);
         
-        fila.Build_MinHeap(fila);
-        
-        while(fila.tam_heap != 0){            
-            Vertice u = fila.heap_extractMin(fila);
-            System.out.println(u.valor);
+        FilaMinima fila = new FilaMinima(this.vertices);
+        fila.fill(this.vertices);
+        //fila.show();
+
+        fila.Build_MinHeap();
+                       
+        while(fila.tam_heap != 0){           
+            Vertice u = fila.heap_extractMin();
+               
+                for(int i = 0; i < u.adjacente.size(); i++){ 
+                   relax(u, u.adjacente.get(i), this.matrizAdj[u.id_orig][u.adjacente.get(i).id_orig], fila);                    
+                }
+                
+        }   
+            System.out.println("\n\n\nCAMINHO MÍNIMO ATÉ O VERTICE[n-1]: " + vertices[vertices.length-1].valor + "\tPredecessor: " + vertices[vertices.length-1].pred);
             
-            ;
-            
-            for(int i = 0; i < u.adjacente.size(); i++){
-                //esse print é pra mostrar qual adjacente está pegando, mas
-                //isso está estranho (pra mim, nesse momento)
-                System.out.println("esse é o adj: " + u.adjacente.get(i).valor);
-                relax(u, u.adjacente.get(i), g.matrizAdj[u.id_orig][u.adjacente.get(i).id_orig], fila);                
-            }
-            
-        }                
     }    
 }
