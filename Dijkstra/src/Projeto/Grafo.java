@@ -47,7 +47,7 @@ public class Grafo {
    public int[][] Le_arq(String file) throws FileNotFoundException, IOException {
         
         String  filename = file;
-        String arquivo = "/home/lucas/ORD/"+filename;
+        String arquivo = "/home/rebeca/ORD/"+filename;
         
         FileReader arq =  new FileReader(arquivo);       
         BufferedReader ler_arq = new BufferedReader(arq);
@@ -122,7 +122,7 @@ public class Grafo {
             proximo.valor = atual.valor + peso_adj;
             f.heap_decreaseKey(proximo.id, proximo.valor);
             proximo.pred = atual.id_orig;
-            pilha.push(proximo.pred);
+            
         }
         
     }
@@ -143,7 +143,7 @@ public class Grafo {
                    relax(u, u.adjacente.get(i), this.matrizAdj[u.id_orig][u.adjacente.get(i).id_orig], fila);                    
                 }
         }
-        
+        /*
         //printar caminhos
         FilaMinima f = new FilaMinima(vertices);
         f.fill(vertices);
@@ -153,9 +153,27 @@ public class Grafo {
             f.Build_MinHeap();
             Vertice v = f.heap_extractMin();
             
+            pilha.push(v.pred);             
             System.out.println("ID: " + v.id_orig + "\tvalor: " + v.valor + "\tPredecessor: " + v.pred);
             if(v.id_orig == (vertices.length -1)) break;
             
-        }   
+        }*/
+        
+        int i = vertices.length-1;
+        pilha.push(vertices[i].id_orig);
+        while(vertices[i].valor != 0){            
+            pilha.push(vertices[i].pred);
+            i = vertices[i].pred;            
+        }
+        
+        System.out.println("\n\nID: " + vertices[vertices.length-1].id_orig + "\tvalor: " + vertices[vertices.length-1].valor);
+        System.out.print("\nCaminho de 0 até n-1:");
+        while(!pilha.empty()){
+            
+            System.out.print(" " + pilha.pop());
+        }
+        System.out.println("");
+        
+        
     }    
 }
