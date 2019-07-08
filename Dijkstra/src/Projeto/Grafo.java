@@ -1,13 +1,10 @@
 package Projeto;
 
-import com.sun.xml.internal.bind.v2.runtime.output.SAXOutput;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Stack;
 
 /**
@@ -50,7 +47,7 @@ public class Grafo {
    public int[][] Le_arq(String file) throws FileNotFoundException, IOException {
         
         String  filename = file;
-        String arquivo = "/home/rebeca/ORD/"+filename;
+        String arquivo = "/home/lucas/ORD/"+filename;
         
         FileReader arq =  new FileReader(arquivo);       
         BufferedReader ler_arq = new BufferedReader(arq);

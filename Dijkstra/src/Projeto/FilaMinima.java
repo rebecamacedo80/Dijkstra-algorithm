@@ -41,10 +41,10 @@ public class FilaMinima extends Heap{
         }
     }
     
-    public void min_heapInsert(FilaMinima fila, int chave){
-        fila.tam_heap += 1;
-        fila.vertice[fila.tam_heap - 1].valor = Integer.MAX_VALUE;
-        fila.heap_decreaseKey((fila.tam_heap - 1), chave);
+    public void min_heapInsert(int chave){
+        this.tam_heap += 1;
+        this.vertice[this.tam_heap - 1].valor = Integer.MAX_VALUE;
+        this.heap_decreaseKey((this.tam_heap - 1), chave);
         
     }
     
